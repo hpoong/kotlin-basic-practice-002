@@ -1,0 +1,17 @@
+
+server:
+  port: 4000
+
+
+spring:
+  datasource:
+    url: jdbc:mariadb://${DB_Address}:${DB_Prot}/${DB_Name}
+    username: ${DB_Username}
+    password: ${DB_Password}
+    driverClassName: org.mariadb.jdbc.Driver
+  jpa:
+    open-in-view: false
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
