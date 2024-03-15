@@ -1,6 +1,7 @@
 package com.hopoong.kotlin_practice.domain.post
 
 import com.hopoong.kotlin_practice.domain.AuditingEntity
+import com.hopoong.kotlin_practice.domain.member.Member
 import javax.persistence.*
 
 
@@ -9,8 +10,8 @@ import javax.persistence.*
 class Post(
 
     title: String,
-    content: String
-
+    content: String,
+    member: Member
 ): AuditingEntity() {
 
     //    @Id
@@ -24,4 +25,10 @@ class Post(
     @Column(name = "content", nullable = true)
     var content: String = content
         protected set
+
+
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Member::class)
+    var member: Member = member
+        protected set
+
 }
