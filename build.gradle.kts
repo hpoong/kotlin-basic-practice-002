@@ -35,6 +35,10 @@ dependencies {
 
 	// JPA
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+	// javafaker
+	implementation("com.github.javafaker:javafaker:1.0.2")
+
 }
 
 tasks.withType<Test> {
