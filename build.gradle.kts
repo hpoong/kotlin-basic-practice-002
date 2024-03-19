@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "2.2.0.RELEASE"
 	id("io.spring.dependency-management") version "1.0.8.RELEASE"
+	id("org.jetbrains.kotlin.plugin.jpa") version "1.3.70"
 	kotlin("jvm") version "1.3.50"
 	kotlin("plugin.spring") version "1.3.50"
 }
@@ -36,8 +37,8 @@ dependencies {
 	// JPA
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
-	// javafaker
-	implementation("com.github.javafaker:javafaker:1.0.2")
+	// log
+	implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.1")
 
 }
 
