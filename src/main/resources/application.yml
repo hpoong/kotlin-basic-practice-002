@@ -20,3 +20,7 @@ decorator:
   datasource:
     p6spy:
       enable-logging: true
+
+
+logging:
+  config: classpath:logback/logback-srping.xml

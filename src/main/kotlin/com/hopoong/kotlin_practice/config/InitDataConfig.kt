@@ -3,6 +3,7 @@ package com.hopoong.kotlin_practice.config
 import com.hopoong.kotlin_practice.domain.member.Member
 import com.hopoong.kotlin_practice.domain.member.MemberRepository
 import com.hopoong.kotlin_practice.domain.member.Role
+import org.slf4j.LoggerFactory
 import org.springframework.boot.context.event.ApplicationStartedEvent
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.event.EventListener

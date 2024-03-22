@@ -39,6 +39,7 @@ dependencies {
 
 	// log
 	implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.1")
+	runtimeOnly("io.github.microutils:kotlin-logging-jvm:3.0.5")
 
 }
 
