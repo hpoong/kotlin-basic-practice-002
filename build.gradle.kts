@@ -36,9 +36,11 @@ dependencies {
 
 	// JPA
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter:2.2.0.RELEASE")
+
 
 	// log
-	implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.1")
+	implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.1")
 	runtimeOnly("io.github.microutils:kotlin-logging-jvm:3.0.5")
 
 }

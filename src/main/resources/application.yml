@@ -5,14 +5,19 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mariadb://${DB_Address}:${DB_Prot}/${DB_Name}
+    url: jdbc:p6spy:mariadb://${DB_Address}:${DB_Prot}/${DB_Name}
+#    url: jdbc:mariadb://${DB_Address}:${DB_Prot}/${DB_Name}
     username: ${DB_Username}
     password: ${DB_Password}
-    driverClassName: org.mariadb.jdbc.Driver
+    driverClassName: com.p6spy.engine.spy.P6SpyDriver
+#    driverClassName: org.mariadb.jdbc.Driver
   jpa:
     open-in-view: false
     generate-ddl: true
-    show-sql: true
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
     hibernate:
       ddl-auto: create
 
@@ -23,4 +28,8 @@ decorator:
 
 
 logging:
+  level:
+    p6spy: info
+#  level:
+#    org.hibernate.type.descriptor.sql.BasicBinder: trace
   config: classpath:logback/logback-srping.xml

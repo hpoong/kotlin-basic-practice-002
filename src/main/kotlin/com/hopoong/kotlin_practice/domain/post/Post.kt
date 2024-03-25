@@ -30,5 +30,4 @@ class Post(
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Member::class)
     var member: Member = member
         protected set
-
 }
