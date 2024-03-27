@@ -1,6 +1,7 @@
 package com.hopoong.kotlin_practice.service
 
 import com.hopoong.kotlin_practice.domain.post.Post
+import com.hopoong.kotlin_practice.domain.post.PostDto
 import com.hopoong.kotlin_practice.domain.post.PostRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -11,7 +12,8 @@ class PostService(
 ) {
 
     @Transactional(readOnly = true)
-    fun findPosts(): MutableList<Post> {
-        return this.postRepository.findAll()
+    fun findPosts(): MutableList<PostDto> {
+        return postRepository.findAll()
+            .map { Post.of(it) }.toMutableList()
     }
 }

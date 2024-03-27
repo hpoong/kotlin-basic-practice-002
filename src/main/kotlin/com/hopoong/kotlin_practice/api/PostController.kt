@@ -1,6 +1,7 @@
 package com.hopoong.kotlin_practice.api
 
 import com.hopoong.kotlin_practice.domain.post.Post
+import com.hopoong.kotlin_practice.domain.post.PostDto
 import com.hopoong.kotlin_practice.service.PostService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -13,7 +14,7 @@ class PostController(
 ) {
 
     @GetMapping("/posts")
-    fun findPosts(): ResponseEntity<MutableList<Post>> {
+    fun findPosts(): ResponseEntity<MutableList<PostDto>> {
         return ResponseEntity.status(HttpStatus.OK).body(this.postService.findPosts());
     }
 
