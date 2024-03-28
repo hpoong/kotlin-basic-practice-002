@@ -17,12 +17,14 @@ class PostService(
             .map { Post.of(it) }.toMutableList()
     }
 
+    @Transactional(readOnly = true)
     fun loadPostInfo(id: Long): PostDto? {
         return postRepository.findById(id)
             .map { Post.of(it) }
             .orElseThrow { NoSuchElementException("해당 ID에 해당하는 글이 없습니다: $id") }
     }
 
+    @Transactional
     fun deletePostInfo(id: Long) {
         val postOptional = postRepository.findById(id)
         if (postOptional.isPresent) {
