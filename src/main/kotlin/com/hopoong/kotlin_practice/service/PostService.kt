@@ -16,4 +16,27 @@ class PostService(
         return postRepository.findAll()
             .map { Post.of(it) }.toMutableList()
     }
+
+    fun loadPostInfo(id: Long): PostDto? {
+        return postRepository.findById(id)
+            .map { Post.of(it) }
+            .orElseThrow { NoSuchElementException("해당 ID에 해당하는 글이 없습니다: $id") }
+    }
+
+    fun deletePostInfo(id: Long) {
+        val postOptional = postRepository.findById(id)
+        if (postOptional.isPresent) {
+            postRepository.deleteById(id)
+        } else {
+            throw NoSuchElementException("해당 ID에 해당하는 글이 없습니다: $id")
+        }
+    }
+
+    fun savePostInfo(memberDto: PostDto): Any? {
+        return null
+    }
+
+    fun modifyPostInfo(memberUpdateDto: Any): Any? {
+        return null
+    }
 }

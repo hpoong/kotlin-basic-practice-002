@@ -13,15 +13,15 @@ class Member(
 
     @Column(name = "email", nullable = false)
     var email: String = email
-        protected set
+//        protected set
 
     @Column(name = "password", nullable = false)
     var password: String = password
-        protected set
+//        protected set
 
     @Enumerated(EnumType.STRING)
     var role: Role = role
-        protected set
+//        protected set
 
 
     companion object {
@@ -33,6 +33,15 @@ class Member(
             )
         }
     }
+
+
+    // protected set 제거 시
+//    fun updateMemberEntity(memberUpdateDto: MemberUpdateDto): Member {
+//        email = memberUpdateDto.email
+//        password = memberUpdateDto.email
+//        role = memberUpdateDto.role
+//        return this
+//    }
 }
 
 enum class Role{

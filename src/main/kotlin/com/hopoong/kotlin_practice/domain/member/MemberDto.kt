@@ -1,6 +1,6 @@
 package com.hopoong.kotlin_practice.domain.member
 
-data class MemberDto(
+open class MemberDto(
     val email: String,
     val password: String,
     val role: Role
@@ -13,3 +13,10 @@ fun MemberDto.toEntity(): Member {
         role = this.role
     )
 }
+
+class MemberUpdateDto(
+    val id: Long,
+    email: String,
+    password: String,
+    role: Role
+) : MemberDto(email, password, role)
