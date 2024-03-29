@@ -21,9 +21,19 @@ fun PostDto.toEntity(): Post {
 }
 
 
-class PostUpdateDto(
-    val id: Long,
-    title: String,
-    content: String,
-    member: MemberDto
-) : PostDto(title, content, member)
+class PostRequestDto {
+
+    class PostUpdateDto(
+        val id: Long,
+        val title: String,
+        val content: String,
+        val memberId: Long,
+    )
+
+
+    class PostSaveDto(
+        val memberId: Long,
+        val title: String,
+        val content: String,
+    )
+}

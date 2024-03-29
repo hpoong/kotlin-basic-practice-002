@@ -1,14 +1,17 @@
 package com.hopoong.kotlin_practice.service
 
+import com.hopoong.kotlin_practice.domain.member.MemberRepository
 import com.hopoong.kotlin_practice.domain.post.Post
 import com.hopoong.kotlin_practice.domain.post.PostDto
 import com.hopoong.kotlin_practice.domain.post.PostRepository
+import com.hopoong.kotlin_practice.domain.post.PostRequestDto
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class PostService(
-    private val postRepository: PostRepository
+    private val postRepository: PostRepository,
+    private val memberRepository: MemberRepository,
 ) {
 
     @Transactional(readOnly = true)
@@ -34,11 +37,29 @@ class PostService(
         }
     }
 
-    fun savePostInfo(memberDto: PostDto): Any? {
-        return null
+    @Transactional
+    fun savePostInfo(postSaveDto: PostRequestDto.PostSaveDto): PostDto {
+        var memberEntity = memberRepository.findById(postSaveDto.memberId)
+            .orElseThrow { NoSuchElementException("해당 ID에 해당하는 글이 없습니다: ${postSaveDto.memberId}") }
+        return Post.of(postRepository.save(Post(postSaveDto.title, postSaveDto.content, memberEntity)))
     }
 
-    fun modifyPostInfo(memberUpdateDto: Any): Any? {
-        return null
+    @Transactional
+    fun modifyPostInfo(postUpdateDto: PostRequestDto.PostUpdateDto): PostDto {
+        var postEntity = postRepository.findById(postUpdateDto.id)
+            .orElseThrow { NoSuchElementException("해당 ID에 해당하는 글이 없습니다: ${postUpdateDto.id}") }
+
+        if (postEntity.member.id != postUpdateDto.memberId) {
+            val memberEntity = memberRepository.findById(postUpdateDto.memberId)
+                .orElseThrow { NoSuchElementException("해당 ID에 해당하는 회원이 없습니다: ${postUpdateDto.memberId}") }
+            postEntity.member = memberEntity
+        }
+
+        postEntity.apply {
+            content =  postUpdateDto.content
+            title = postUpdateDto.title
+        }
+
+        return Post.of(postRepository.save(postEntity))
     }
 }

@@ -16,16 +16,16 @@ class Post(
 
     @Column(name = "title", nullable = false)
     var title: String = title
-        protected set
+//        protected set
 
     @Column(name = "content", nullable = true)
     var content: String = content
-        protected set
+//        protected set
 
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Member::class)
     var member: Member = member
-        protected set
+//        protected set
 
     companion object {
         fun of(post: Post): PostDto {

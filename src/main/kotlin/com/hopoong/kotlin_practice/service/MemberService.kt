@@ -55,7 +55,8 @@ class MemberService(
      */
     @Transactional
     fun modifyMemberInfo(memberUpdateDto: MemberUpdateDto): Member {
-        val memberEntity = memberRepository.findById(memberUpdateDto.id).orElseThrow { NoSuchElementException("해당 ID에 해당하는 회원이 없습니다: ${memberUpdateDto.id}") }
+        val memberEntity = memberRepository.findById(memberUpdateDto.id)
+            .orElseThrow { NoSuchElementException("해당 ID에 해당하는 회원이 없습니다: ${memberUpdateDto.id}") }
 
         memberEntity.apply {
             email = memberUpdateDto.email

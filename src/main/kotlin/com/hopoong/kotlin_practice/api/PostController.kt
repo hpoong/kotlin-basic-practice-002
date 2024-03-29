@@ -1,7 +1,7 @@
 package com.hopoong.kotlin_practice.api
 
 import com.hopoong.kotlin_practice.domain.post.PostDto
-import com.hopoong.kotlin_practice.domain.post.PostUpdateDto
+import com.hopoong.kotlin_practice.domain.post.PostRequestDto
 import com.hopoong.kotlin_practice.service.PostService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -38,16 +38,16 @@ class PostController(
      * 사용자 추가
      */
     @PostMapping("/posts")
-    fun savePostInfo(@RequestBody memberDto: PostDto) : ResponseEntity<Any> {
-        return ResponseEntity.status(HttpStatus.OK).body(postService.savePostInfo(memberDto))
+    fun savePostInfo(@RequestBody saveDto: PostRequestDto.PostSaveDto) : ResponseEntity<Any> {
+        return ResponseEntity.status(HttpStatus.OK).body(postService.savePostInfo(saveDto))
     }
 
     /*
      * 사용자 변경
      */
     @PutMapping("/posts")
-    fun modifyPostInfo(@RequestBody memberUpdateDto: PostUpdateDto) : ResponseEntity<Any> {
-        return ResponseEntity.status(HttpStatus.OK).body(postService.modifyPostInfo(memberUpdateDto))
+    fun modifyPostInfo(@RequestBody updateDto: PostRequestDto.PostUpdateDto) : ResponseEntity<Any> {
+        return ResponseEntity.status(HttpStatus.OK).body(postService.modifyPostInfo(updateDto))
     }
 
 }
