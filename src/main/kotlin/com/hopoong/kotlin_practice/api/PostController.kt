@@ -12,14 +12,16 @@ class PostController(
     private val postService: PostService
 ) {
 
+    /*
+     * 게시글 전체 조회
+     */
     @GetMapping("/posts")
     fun loadPostList(): ResponseEntity<MutableList<PostDto>> {
         return ResponseEntity.status(HttpStatus.OK).body(postService.findPosts());
     }
 
-
     /*
-     * 사용자 조회
+     * 게시글 조회
      */
     @GetMapping("/posts/{id}")
     fun loadPostInfo(@PathVariable id: Long) : ResponseEntity<PostDto> {
@@ -27,7 +29,7 @@ class PostController(
     }
 
     /*
-     * 사용자 삭제
+     * 게시글 삭제
      */
     @DeleteMapping("/posts/{id}")
     fun deletePostInfo(@PathVariable id: Long) : ResponseEntity<Any> {
@@ -35,7 +37,7 @@ class PostController(
     }
 
     /*
-     * 사용자 추가
+     * 게시글 추가
      */
     @PostMapping("/posts")
     fun savePostInfo(@RequestBody saveDto: PostRequestDto.PostSaveDto) : ResponseEntity<Any> {
@@ -43,7 +45,7 @@ class PostController(
     }
 
     /*
-     * 사용자 변경
+     * 게시글 변경
      */
     @PutMapping("/posts")
     fun modifyPostInfo(@RequestBody updateDto: PostRequestDto.PostUpdateDto) : ResponseEntity<Any> {
