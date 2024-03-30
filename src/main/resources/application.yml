@@ -5,12 +5,12 @@ server:
 
 spring:
   datasource:
-    url: jdbc:p6spy:mariadb://${DB_Address}:${DB_Prot}/${DB_Name}
-#    url: jdbc:mariadb://${DB_Address}:${DB_Prot}/${DB_Name}
+    url: jdbc:mariadb://${DB_Address}:${DB_Prot}/${DB_Name}
     username: ${DB_Username}
     password: ${DB_Password}
-    driverClassName: com.p6spy.engine.spy.P6SpyDriver
-#    driverClassName: org.mariadb.jdbc.Driver
+#    url: jdbc:p6spy:mariadb://${DB_Address}:${DB_Prot}/${DB_Name}
+#    driverClassName: com.p6spy.engine.spy.P6SpyDriver
+    driverClassName: org.mariadb.jdbc.Driver
   jpa:
     open-in-view: false
     generate-ddl: true
