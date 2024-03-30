@@ -10,6 +10,7 @@ import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 class MemberController(
@@ -44,7 +45,7 @@ class MemberController(
      * 사용자 추가
      */
     @PostMapping("/members")
-    fun saveMemberInfo(@RequestBody memberDto: MemberDto) : ResponseEntity<Any> {
+    fun saveMemberInfo(@Valid @RequestBody memberDto: MemberDto) : ResponseEntity<Any> {
         return ResponseEntity.status(HttpStatus.OK).body(memberService.saveMemberInfo(memberDto))
     }
 
@@ -52,7 +53,7 @@ class MemberController(
      * 사용자 변경
      */
     @PutMapping("/members")
-    fun modifyMemberInfo(@RequestBody memberUpdateDto: MemberUpdateDto) : ResponseEntity<Any> {
+    fun modifyMemberInfo(@Valid @RequestBody memberUpdateDto: MemberUpdateDto) : ResponseEntity<Any> {
         return ResponseEntity.status(HttpStatus.OK).body(memberService.modifyMemberInfo(memberUpdateDto))
     }
 
