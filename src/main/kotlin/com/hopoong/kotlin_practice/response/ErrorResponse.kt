@@ -1,12 +1,23 @@
 package com.hopoong.kotlin_practice.response
 
+import com.hopoong.kotlin_practice.util.TimeUtil
+
 class ErrorResponse(
-    val status: String = "Failure",
+    val success: Boolean = false,
     var code: String,
     var message: String,
+    private var _timestamp: String? = null
 ) {
-    constructor(successCodeEnum: SuccessCodeEnum) : this(
-        code = successCodeEnum.code,
-        message = successCodeEnum.message,
+    val timestamp: String
+        get() {
+            if (_timestamp == null) {
+                _timestamp = TimeUtil().getFormattedTimestamp()
+            }
+            return _timestamp!!
+        }
+
+    constructor(errorCodeEnum: ErrorCodeEnum) : this(
+        code = errorCodeEnum.code,
+        message = errorCodeEnum.message
     )
 }

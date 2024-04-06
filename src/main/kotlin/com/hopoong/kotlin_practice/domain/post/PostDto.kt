@@ -1,7 +1,6 @@
 package com.hopoong.kotlin_practice.domain.post
 
 import com.hopoong.kotlin_practice.domain.member.MemberDto
-import com.hopoong.kotlin_practice.domain.member.Role
 import com.hopoong.kotlin_practice.domain.member.toEntity
 
 

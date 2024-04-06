@@ -12,19 +12,12 @@ enum class ErrorCodeEnum(
 ) {
 
     // ************ T00 : Member Error
-    ERROR_MEMBER_SAVE("T00", "C01", "Save Error"),
-    ERROR_MEMBER_UPDATE("T00", "C02", "Update Error"),
-    ERROR_MEMBER_DELETE("T00", "C03", "Delete Error"),
-    ERROR_MEMBER("T00", "C04", "Error"),
-
+    ERROR_MEMBER_SEARCH("T00", "C01", "Member Search Error"),
+    ERROR_MEMBER_SAVE("T00", "C02", "Member Save Error"),
 
     // ************ T01 :Post Error
-    ERROR_POST_SAVE("T01", "F01", "Save Error"),
-    ERROR_POST_UPDATE("T01", "F02", "Update Error"),
-    ERROR_POST_DELETE("T01", "F03", "Delete Error"),
-    ERROR_POST("T01", "F04", "Error"),
 
 
     // ************ 4xxx : Server Error
-    SERVER_ERROR("F-4000", "", "Server Error")
+    SERVER_ERROR("T40", "C01", "Server Error")
 }
