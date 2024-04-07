@@ -9,12 +9,6 @@ import javax.persistence.EntityManagerFactory
 
 
 @Configuration
-@ComponentScan(basePackages = ["com.hopoong.kotlin_practice"])
-@EnableTransactionManagement
 class DatabaseConfig {
 
-    @Bean
-    fun transactionManager(entityManagerFactory: EntityManagerFactory?): JpaTransactionManager? {
-        return JpaTransactionManager(entityManagerFactory!!)
-    }
 }
