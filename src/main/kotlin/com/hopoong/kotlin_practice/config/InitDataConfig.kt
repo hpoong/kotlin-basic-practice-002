@@ -18,25 +18,15 @@ class InitDataConfig(
 
     @EventListener
     fun onApplicationEvent(event: ApplicationStartedEvent) {
-
-//        val memberArr = mutableListOf<Member>();
-//        val postArr = mutableListOf<Post>();
-//
+//        val postArr = mutableListOf<Post>()
 //        for(i in 1..50) {
-////            memberArr.add(
-////                MemberDto(email = "test", role = Role.USERM, password = "1111").toEntity()
-////            )
-////            memberRepository.saveAll(memberArr)
-//
-//            var member = memberRepository.save(MemberDto(email = "email - ${i}", role = Role.USERM, password = "password - ${i}").toEntity());
+//            var member = memberRepository.save(Member(email = "email - ${i}", role = Role.USERM, password = "password - ${i}"));
 //            memberRepository.save(member);
 //
 //            postArr.add(
-//                PostDto(title = "title - ${i}", content = "content - ${i}", member = member).toEntity()
+//                Post(title = "title - ${i}", content = "content - ${i}", member = member)
 //            )
 //        }
-//
-//        memberRepository.saveAll(memberArr)
 //        postRepository.saveAll(postArr)
     }
 

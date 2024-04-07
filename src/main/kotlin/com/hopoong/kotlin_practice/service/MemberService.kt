@@ -18,7 +18,7 @@ class MemberService(
     private val memberRepository: MemberRepository
 ) {
 
-    private val log = LoggerFactory.getLogger(MemberService::class.java)
+    private val log = LoggerFactory.getLogger(this::class.java)
 
     /*
      * 사용자 조회

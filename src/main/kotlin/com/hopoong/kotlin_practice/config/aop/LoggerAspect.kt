@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest
 @Aspect
 class LoggerAspect {
 
-    private val log = LoggerFactory.getLogger(LoggerAspect::class.java)
+    private val log = LoggerFactory.getLogger(this::class.java)
 
 
     @Pointcut(

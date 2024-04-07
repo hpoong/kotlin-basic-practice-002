@@ -19,8 +19,7 @@ class PostService(
      */
     @Transactional(readOnly = true)
     fun findPosts(): MutableList<PostDto> {
-        return postRepository.findAll()
-            .map { Post.of(it) }.toMutableList()
+        return postRepository.findAllPosts().map { Post.of(it) }.toMutableList()
     }
 
     /*
