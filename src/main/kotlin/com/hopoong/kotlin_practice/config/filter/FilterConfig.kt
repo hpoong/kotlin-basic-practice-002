@@ -8,7 +8,7 @@ import javax.servlet.Filter
 @Configuration
 class FilterConfig {
 
-    @Bean
+//    @Bean
     fun filterRegistrationBean(): FilterRegistrationBean<Filter>? {
         val bean: FilterRegistrationBean<Filter> = FilterRegistrationBean<Filter>()
         bean.setFilter(SomeFilter())
