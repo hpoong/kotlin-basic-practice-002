@@ -1,4 +1,4 @@
-package com.hopoong.kotlin_practice.config.log
+package com.hopoong.kotlin_practice.config.jpa.log
 
 import com.p6spy.engine.logging.Category
 import com.p6spy.engine.spy.P6SpyOptions

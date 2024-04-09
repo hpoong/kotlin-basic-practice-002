@@ -17,7 +17,7 @@ fun MemberDto.toEntity(): Member {
     return Member(
         email = this.email ?: "",
         password = this.password ?: "",
-        role = this.role ?: Role.USERM
+        role = this.role ?: Role.USER
     )
 }
 

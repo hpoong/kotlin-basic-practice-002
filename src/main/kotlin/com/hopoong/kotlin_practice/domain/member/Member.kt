@@ -45,6 +45,6 @@ class Member(
 }
 
 enum class Role{
-    USERM, ADMIN
+    USER, ADMIN
 }
 

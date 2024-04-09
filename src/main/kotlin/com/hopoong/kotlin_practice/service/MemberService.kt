@@ -1,22 +1,23 @@
 package com.hopoong.kotlin_practice.service
 
 import com.hopoong.kotlin_practice.domain.member.*
+import com.hopoong.kotlin_practice.domain.member.model.SecurityMemberModel
 import com.hopoong.kotlin_practice.exception.BusinessException
-import com.hopoong.kotlin_practice.exception.GlobalExceptionHandler
 import com.hopoong.kotlin_practice.response.ErrorCodeEnum
 import com.hopoong.kotlin_practice.response.ErrorResponse
 import com.hopoong.kotlin_practice.response.SuccessCodeEnum
 import com.hopoong.kotlin_practice.response.SuccessResponses
 import org.slf4j.LoggerFactory
-import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.data.domain.Pageable
 
 @Service
 class MemberService(
-    private val memberRepository: MemberRepository
-) {
+    private val memberRepository: MemberRepository,
+): UserDetailsService {
 
     private val log = LoggerFactory.getLogger(this::class.java)
 
@@ -43,6 +44,8 @@ class MemberService(
                 }
         )
     }
+
+
 
     /*
      * 사용자 삭제
@@ -92,7 +95,7 @@ class MemberService(
         memberEntity.apply {
             email = memberUpdateDto.email ?: ""
             password = memberUpdateDto.password ?: ""
-            role = memberUpdateDto.role ?: Role.USERM
+            role = memberUpdateDto.role ?: Role.USER
         }
 
         return SuccessResponses(
@@ -100,6 +103,9 @@ class MemberService(
         )
     }
 
-
-
+    override fun loadUserByUsername(username: String): UserDetails {
+        val member = memberRepository.findMembers1(username)
+        return member?.let { SecurityMemberModel(it) }
+            ?: throw BusinessException(ErrorCodeEnum.ERROR_MEMBER_SEARCH)
+    }
 }
