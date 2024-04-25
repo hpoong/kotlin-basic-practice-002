@@ -16,6 +16,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception::class)
     fun handleException(ex: Exception): ResponseEntity<ErrorResponse?>? {
+        ex.printStackTrace()
         log.error("GlobalException")
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body(ErrorResponse(ErrorCodeEnum.SERVER_ERROR))

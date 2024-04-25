@@ -23,7 +23,7 @@ interface MemberRepository: JpaRepository<Member, Long>, MemberCustomRepository 
 
 interface MemberCustomRepository{
     fun findMembers(pageable: Pageable): Page<Member>
-    fun findMembers1(username: String): Member?
+    fun findUserInfo(username: String): Member?
 }
 
 
@@ -54,28 +54,7 @@ class MemberCustomRepositoryImpl(
         }
     }
 
-//    override fun findMembers1(username: String): Member {
-//        val parentComment: Member? =
-//            try {
-//                queryFactory.singleQuery<Member> {
-//                    select(entity(Member::class))
-//                    from(entity(Member::class))
-//                    where(
-//                        col(Member::email).equal(username)
-//                    )
-//                }
-//            } catch (ex: NoResultException) {
-//                null
-//            }
-//
-//         if(parentComment != null)
-//             return parentComment
-//        else
-//            throw throw BusinessException(ErrorCodeEnum.ERROR_MEMBER_SEARCH)
-//    }
-
-
-    override fun findMembers1(username: String): Member? {
+    override fun findUserInfo(username: String): Member? {
         return try {
             queryFactory.singleQuery<Member> {
                 select(entity(Member::class))

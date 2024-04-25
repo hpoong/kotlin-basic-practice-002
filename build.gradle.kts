@@ -1,12 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-//	id("org.springframework.boot") version "2.2.0.RELEASE"
-//	id("io.spring.dependency-management") version "1.0.8.RELEASE"
-//	id("org.jetbrains.kotlin.plugin.jpa") version "1.3.70"
-//	kotlin("jvm") version "1.3.50"
-//	kotlin("plugin.spring") version "1.3.50"
-
 	id("org.springframework.boot") version "2.7.7"
 	id("io.spring.dependency-management") version "1.0.15.RELEASE"
 	kotlin("jvm") version "1.6.21"
@@ -30,6 +24,8 @@ allOpen {
 }
 
 dependencies {
+
+	// spring
 	implementation ("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-aop")
@@ -50,6 +46,11 @@ dependencies {
 	// log
 	implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.1")
 	runtimeOnly("io.github.microutils:kotlin-logging-jvm:3.0.5")
+
+	// JWT Token
+	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 }
 
 tasks.withType<Test> {

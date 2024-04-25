@@ -33,3 +33,8 @@ logging:
 #  level:
 #    org.hibernate.type.descriptor.sql.BasicBinder: trace
   config: classpath:logback/logback-srping.xml
+
+
+jwt:
+  header: Authorization
+  secret: 4e86c5a05169ed3813169c54366044bc3c1d6ece4df90e5056b0700db991a961eae0a9b67a97f18f8a5fd5c205c768a3a80a3b945e559e397b552ab526fefd98
