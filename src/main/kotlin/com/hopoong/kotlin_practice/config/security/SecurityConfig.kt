@@ -28,6 +28,7 @@ class SecurityConfig(
             .anyRequest().permitAll()
             .and().csrf().disable()
             .formLogin().disable()
+            .logout().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and().addFilterBefore(jwtAuthenticationFilterHandler(), UsernamePasswordAuthenticationFilter::class.java)
 

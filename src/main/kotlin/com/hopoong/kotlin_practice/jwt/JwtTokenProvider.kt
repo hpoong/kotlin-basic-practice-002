@@ -6,13 +6,12 @@ import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import io.jsonwebtoken.security.SecurityException
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.ResponseCookie
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
-import org.springframework.security.core.GrantedAuthority
 import org.springframework.stereotype.Component
 import java.security.Key
 import java.util.*
-import java.util.stream.Collectors
 import javax.annotation.PostConstruct
 
 
@@ -23,8 +22,12 @@ class JwtTokenProvider {
     private val AUTHROLE_KEY = "auth"
     private val AUTHUSER_KEY = "user"
 
-    // 유효시간
-    private val ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60
+    // 유효시간 = 1시간
+//    private val ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60
+    private val ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60
+
+    // 유효시간 = 7일
+    private val REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7
 
 
     @Value("\${jwt.secret}")
@@ -47,12 +50,47 @@ class JwtTokenProvider {
             .claim(AUTHROLE_KEY, param.role)
             .claim(AUTHUSER_KEY, param.email)
             .signWith(key, SignatureAlgorithm.HS512)
-            .setIssuedAt(Date(System.currentTimeMillis()))                                                      // 생성
-            .setExpiration(Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRE_TIME))                    // 만료
+            .setIssuedAt(Date(System.currentTimeMillis()))
+            .setExpiration(Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRE_TIME))
             .compact()
 
         return JwtTokenModel(accessToken = accessToken)
     }
+
+
+    fun generateRefreshTokenCookie(param: Claims): ResponseCookie {
+
+        // refreshToken 토큰생성
+        var refreshToken = Jwts.builder()
+            .claim(AUTHROLE_KEY, param.get(AUTHROLE_KEY))
+            .claim(AUTHUSER_KEY, param.get(AUTHUSER_KEY))
+            .signWith(key, SignatureAlgorithm.HS512)
+            .setIssuedAt(Date(System.currentTimeMillis()))
+            .setExpiration(Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRE_TIME))
+            .compact()
+
+        return ResponseCookie.from("refresh-token", refreshToken)
+            .httpOnly(true)
+            .secure(false) // http
+            .sameSite("None")
+            .path("/")
+            .build()
+    }
+
+    /*
+     * accessToken 토큰생성
+     */
+    fun accessCreateToken(param: Claims): String? {
+
+        return Jwts.builder()
+            .claim(AUTHROLE_KEY, param.get(AUTHROLE_KEY))
+            .claim(AUTHUSER_KEY, param.get(AUTHUSER_KEY))
+            .signWith(key, SignatureAlgorithm.HS512)
+            .setIssuedAt(Date(System.currentTimeMillis()))
+            .setExpiration(Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRE_TIME))
+            .compact()
+    }
+
 
     /*
      * 토큰을 받아서 Authentication 객체를 반환
@@ -66,15 +104,15 @@ class JwtTokenProvider {
     /*
      * 토큰의 유효성 검사
      */
-    fun validateToken(token: String) {
+    fun validateAndReleaseToken(token: String): Claims {
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token)
+            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).body
         } catch (e: SecurityException) {
             throw Exception("잘못된 JWT 서명입니다.")
         } catch (e: MalformedJwtException) {
             throw Exception("잘못된 JWT 서명입니다.")
         } catch (e: ExpiredJwtException) {
-            throw Exception("만료된 JWT 서명입니다.")
+            throw e
         } catch (e: UnsupportedJwtException) {
             throw Exception("지원되지 않는 JWT 서명입니다.")
         } catch (e: IllegalArgumentException) {
@@ -82,6 +120,13 @@ class JwtTokenProvider {
         } catch (e: Exception) {
             throw Exception("JWT 오류")
         }
+    }
+
+    /*
+     * refreshToken 만료처리
+     */
+    fun refreshTokenCookiExpired(): ResponseCookie {
+        return ResponseCookie.from("refresh-token", "").maxAge(1).build()
     }
 
 }

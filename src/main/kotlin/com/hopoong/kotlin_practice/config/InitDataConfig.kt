@@ -20,7 +20,7 @@ class InitDataConfig(
     fun onApplicationEvent(event: ApplicationStartedEvent) {
 //        val postArr = mutableListOf<Post>()
 //        for(i in 1..50) {
-//            var member = memberRepository.save(Member(email = "email - ${i}", role = Role.USERM, password = "password - ${i}"));
+//            var member = memberRepository.save(Member(email = "email-${i}", role = Role.USER, password = "123"));
 //            memberRepository.save(member);
 //
 //            postArr.add(

@@ -1,6 +1,7 @@
 package com.hopoong.kotlin_practice.jwt
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import io.jsonwebtoken.ExpiredJwtException
 import org.springframework.http.HttpHeaders
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
@@ -31,15 +32,18 @@ class JwtAuthenticationFilter(
                 return
             }
 
-            jwtTokenProvider.validateToken(authorizationHeader)
+            jwtTokenProvider.validateAndReleaseToken(authorizationHeader)
 
             val authentication: Authentication = jwtTokenProvider.getAuthentication(authorizationHeader)
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             filterChain.doFilter(request, response)
+        }  catch (ex: ExpiredJwtException) {
+            ex.printStackTrace()
+            response.sendJsonResponse(HttpServletResponse.SC_FORBIDDEN, "만료된 JWT 서명입니다.")
         } catch (ex: Exception) {
             ex.printStackTrace()
-            response.sendJsonResponse(HttpServletResponse.SC_BAD_REQUEST, ex.message)
+            response.sendJsonResponse(HttpServletResponse.SC_UNAUTHORIZED, ex.message)
         }
 
     }
