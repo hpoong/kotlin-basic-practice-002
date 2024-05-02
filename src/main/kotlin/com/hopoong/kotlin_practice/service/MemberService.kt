@@ -4,7 +4,6 @@ import com.hopoong.kotlin_practice.domain.member.*
 import com.hopoong.kotlin_practice.exception.BusinessException
 import com.hopoong.kotlin_practice.response.CommonCode
 import com.hopoong.kotlin_practice.response.CommonResponse
-import com.hopoong.kotlin_practice.response.ErrorResponse
 import com.hopoong.kotlin_practice.response.SuccessResponses
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Pageable
@@ -54,7 +53,7 @@ class MemberService(
             return SuccessResponses(CommonCode.MEMBER)
         } else {
             log.error("Exception :::: 해당 ID에 해당하는 회원이 없습니다 ::::: $id")
-            return ErrorResponse(CommonCode.MEMBER, "해당 ID에 해당하는 회원이 없습니다")
+            throw BusinessException(CommonCode.MEMBER, "해당 ID에 해당하는 회원이 없습니다")
         }
     }
 
@@ -70,7 +69,7 @@ class MemberService(
             )
         } catch (ex: Exception) {
             log.error("Exception :::: ${ex.message}")
-            return ErrorResponse(CommonCode.MEMBER, "사용자 저장 실패")
+            throw BusinessException(CommonCode.MEMBER, "사용자 저장 실패")
         }
     }
 
@@ -97,7 +96,4 @@ class MemberService(
             CommonCode.MEMBER, memberRepository.save(memberEntity)
         )
     }
-
-
-
 }

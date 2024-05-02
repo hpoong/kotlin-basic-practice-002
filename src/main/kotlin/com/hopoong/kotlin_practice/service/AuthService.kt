@@ -1,13 +1,13 @@
 package com.hopoong.kotlin_practice.service
 
-import com.hopoong.kotlin_practice.domain.login.LoginDto
 import com.hopoong.kotlin_practice.domain.member.MemberDto
 import com.hopoong.kotlin_practice.domain.member.MemberRepository
-import com.hopoong.kotlin_practice.domain.member.toEntity
 import com.hopoong.kotlin_practice.exception.BusinessException
 import com.hopoong.kotlin_practice.jwt.JwtTokenModel
 import com.hopoong.kotlin_practice.jwt.JwtTokenProvider
-import com.hopoong.kotlin_practice.response.*
+import com.hopoong.kotlin_practice.response.CommonCode
+import com.hopoong.kotlin_practice.response.CommonResponse
+import com.hopoong.kotlin_practice.response.SuccessResponses
 import com.hopoong.kotlin_practice.util.CookieUtil
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
@@ -27,8 +27,8 @@ class AuthService(
     /*
      * 사용자 정보 조회
      */
-    fun loadUserByUsername(params: LoginDto): JwtTokenModel {
-        val member = memberRepository.findUserInfo(params.username)
+    fun loadUserByUsername(params: MemberDto): JwtTokenModel {
+        val member = memberRepository.findUserInfo(params.email)
 
         member?.let { it }
             ?: throw BusinessException(CommonCode.AUTH, "사용자가 존재하지 않습니다.")
@@ -76,7 +76,7 @@ class AuthService(
             )
         } catch (ex: Exception) {
             log.error("Exception :::: ${ex.message}")
-            return ErrorResponse(CommonCode.AUTH, "회원가입 실패")
+            throw BusinessException(CommonCode.AUTH, "회원가입 실패")
         }
     }
 
