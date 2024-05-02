@@ -8,7 +8,7 @@ open class MemberDto(
     val email: String?,
 
     @field:NotBlank(message = "required password")
-    val password: String?,
+    var password: String?,
 
     val role: Role?
 )

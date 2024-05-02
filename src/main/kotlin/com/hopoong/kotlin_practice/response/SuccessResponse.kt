@@ -1,32 +1,18 @@
 package com.hopoong.kotlin_practice.response
 
-import com.hopoong.kotlin_practice.util.TimeUtil
-
 class SuccessResponses(
-    val success: Boolean = true,
     var code: String,
-    var message: String,
-    private var _timestamp: String? = null,
+    var message: String = "Success",
     var data: Any?
-) {
-    val timestamp: String
-        get() {
-            if (_timestamp == null) {
-                _timestamp = TimeUtil().getFormattedTimestamp()
-            }
-            return _timestamp!!
-        }
+): CommonResponse(true) {
 
-    constructor(successCodeEnum: SuccessCodeEnum) : this(
-        code = successCodeEnum.code,
-        message = successCodeEnum.message,
+    constructor(code: CommonCode) : this(
+        code = code.code,
         data = null
     )
 
-    constructor(successCodeEnum: SuccessCodeEnum, data: Any) : this(
-        code = successCodeEnum.code,
-        message = successCodeEnum.message,
+    constructor(code: CommonCode, data: Any) : this(
+        code = code.code,
         data = data
     )
 }
-

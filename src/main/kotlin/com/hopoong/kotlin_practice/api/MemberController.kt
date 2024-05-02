@@ -2,7 +2,7 @@ package com.hopoong.kotlin_practice.api
 
 import com.hopoong.kotlin_practice.domain.member.MemberDto
 import com.hopoong.kotlin_practice.domain.member.MemberUpdateDto
-import com.hopoong.kotlin_practice.response.SuccessResponses
+import com.hopoong.kotlin_practice.response.CommonResponse
 import com.hopoong.kotlin_practice.service.MemberService
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
@@ -20,7 +20,7 @@ class MemberController(
      * 사용자 전체 조회
      */
     @GetMapping("/members")
-    fun loadMemberList(@PageableDefault(size = 10) pageable: Pageable) : ResponseEntity<SuccessResponses> {
+    fun loadMemberList(@PageableDefault(size = 10) pageable: Pageable) : ResponseEntity<CommonResponse> {
         return ResponseEntity.status(HttpStatus.OK).body(this.memberService.loadMemberList(pageable))
     }
 
@@ -28,7 +28,7 @@ class MemberController(
      * 사용자 조회
      */
     @GetMapping("/members/{id}")
-    fun loadMemberInfo(@PathVariable id: Long) : ResponseEntity<SuccessResponses> {
+    fun loadMemberInfo(@PathVariable id: Long) : ResponseEntity<CommonResponse> {
         return ResponseEntity.status(HttpStatus.OK).body(this.memberService.loadMemberInfo(id))
     }
 

@@ -1,12 +1,15 @@
 package com.hopoong.kotlin_practice.exception
 
-import com.hopoong.kotlin_practice.response.ErrorCodeEnum
+import com.hopoong.kotlin_practice.response.CommonCode
 
 class BusinessException: Exception {
 
-    val errorCodeEnum: ErrorCodeEnum
+    val code: CommonCode
+    override val message: String
 
-    constructor(errorCodeEnum: ErrorCodeEnum) : super() {
-        this.errorCodeEnum = errorCodeEnum
+
+    constructor(code: CommonCode, message: String) : super() {
+        this.code = code
+        this.message = message
     }
 }

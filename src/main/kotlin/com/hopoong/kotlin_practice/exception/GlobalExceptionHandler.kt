@@ -1,6 +1,6 @@
 package com.hopoong.kotlin_practice.exception
 
-import com.hopoong.kotlin_practice.response.ErrorCodeEnum
+import com.hopoong.kotlin_practice.response.CommonCode
 import com.hopoong.kotlin_practice.response.ErrorResponse
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
@@ -19,15 +19,16 @@ class GlobalExceptionHandler {
         ex.printStackTrace()
         log.error("GlobalException")
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(ErrorResponse(ErrorCodeEnum.SERVER_ERROR))
+            .body(ErrorResponse(CommonCode.SERVER, "Server Error"))
     }
 
 
     @ExceptionHandler(BusinessException::class)
     fun handleBusinessException(ex: BusinessException): ResponseEntity<ErrorResponse?>? {
         log.error("BusinessException")
+        ex.printStackTrace()
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(ErrorResponse(ex.errorCodeEnum))
+            .body(ErrorResponse(ex.code, ex.message))
     }
 
 }

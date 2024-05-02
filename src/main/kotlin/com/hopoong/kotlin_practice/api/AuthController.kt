@@ -1,6 +1,9 @@
 package com.hopoong.kotlin_practice.api
 
 import com.hopoong.kotlin_practice.domain.login.LoginDto
+import com.hopoong.kotlin_practice.domain.member.MemberDto
+import com.hopoong.kotlin_practice.response.CommonResponse
+import com.hopoong.kotlin_practice.response.ErrorResponse
 import com.hopoong.kotlin_practice.service.AuthService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -17,10 +20,20 @@ class AuthController(
      */
     @PostMapping("/login")
     fun saveMemberInfo(@RequestBody params: LoginDto) : ResponseEntity<Any> {
+        println(params.toString())
         var token = authService.loadUserByUsername(params)
 
         return ResponseEntity.status(HttpStatus.OK)
             .headers(authService.createRefreshToken(token.accessToken)).body(token)
+    }
+
+
+    /*
+     * 회원가입
+     */
+    @PostMapping("/signup")
+    fun signup(@RequestBody params: MemberDto) : ResponseEntity<CommonResponse> {
+        return ResponseEntity.status(HttpStatus.OK).body(authService.signup(params))
     }
 
     /*
