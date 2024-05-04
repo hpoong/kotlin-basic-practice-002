@@ -20,6 +20,8 @@ spring:
 #        format_sql: true
     hibernate:
       ddl-auto: update
+  redis:
+    port: 6379
 
 decorator:
   datasource:
