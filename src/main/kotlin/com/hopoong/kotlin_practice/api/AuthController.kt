@@ -13,6 +13,22 @@ class AuthController(
     private val authService: AuthService,
 ) {
 
+    @GetMapping("/all")
+    fun redisDataAll() : ResponseEntity<Any> {
+        return ResponseEntity.status(HttpStatus.OK).body(authService.redisDataAll())
+    }
+
+    @GetMapping("/clear")
+    fun redisDataClear() : ResponseEntity<Any> {
+        return ResponseEntity.status(HttpStatus.OK).body(authService.redisDataClear())
+    }
+
+    @GetMapping("/expire/{key}")
+    fun redisDataKeyExpireTime(@PathVariable key: String) : ResponseEntity<Any> {
+        return ResponseEntity.status(HttpStatus.OK).body(authService.redisDataKeyExpireTime(key))
+    }
+
+
     /*
      * 로그인
      */

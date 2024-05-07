@@ -21,7 +21,7 @@ class AuthService(
     private val memberRepository: MemberRepository,
     private val passwordEncoder: PasswordEncoder,
     private val jwtTokenProvider: JwtTokenProvider,
-//    private val redisRepositoryImpl: RedisRepositoryImpl,
+    private val redisRepositoryImpl: RedisRepositoryImpl,
 ) {
 
     private val log = LoggerFactory.getLogger(this::class.java)
@@ -55,7 +55,9 @@ class AuthService(
     fun createRefreshToken(token: String): HttpHeaders {
         var claims = jwtTokenProvider.validateAndReleaseToken(token)
         var cookie = jwtTokenProvider.generateRefreshTokenCookie(claims)
-        println(cookie.value)
+
+        // refresh token redis 저장
+        redisRepositoryImpl.save(claims.get("user").toString(), cookie.value)
         return CookieUtil().createCookieHeaders(cookie)
     }
 
@@ -81,6 +83,22 @@ class AuthService(
             log.error("Exception :::: ${ex.message}")
             throw BusinessException(CommonCode.AUTH, "회원가입 실패")
         }
+    }
+
+    /* *************************************
+     * test - redis db
+     */
+    fun redisDataAll(): Any? {
+        return redisRepositoryImpl.findAll()
+    }
+
+    fun redisDataClear(): Unit? {
+        redisRepositoryImpl.clear()
+        return null
+    }
+
+    fun redisDataKeyExpireTime(key: String): String? {
+        return redisRepositoryImpl.findKeyExpireTime(key)
     }
 
 }

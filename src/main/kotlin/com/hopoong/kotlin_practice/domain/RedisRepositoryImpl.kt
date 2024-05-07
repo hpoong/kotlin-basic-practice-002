@@ -1,18 +1,18 @@
 package com.hopoong.kotlin_practice.domain
 
+import com.hopoong.kotlin_practice.util.TimeUtil
 import org.slf4j.LoggerFactory
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Component
-import org.springframework.stereotype.Repository
-import java.util.Optional
+import java.util.*
 
-//@Component
+@Component
 class RedisRepositoryImpl(
     private val redisTemplate: RedisTemplate<String, Any>
 ): RedisRepository {
 
     private val log = LoggerFactory.getLogger(this::class.java)
-
+    private val REFRESH_TOKEN_EXPIRE_TIME: Long = 1000 * 60 * 60 * 24 * 7
 
     override fun clear() {
         redisTemplate.execute { connection ->
@@ -43,8 +43,13 @@ class RedisRepositoryImpl(
     }
 
     override fun save(key: String, value: Any) {
+//        println(TimeUtil().formatTTL(REFRESH_TOKEN_EXPIRE_TIME))
         redisTemplate.opsForValue().set(key, value)
     }
 
+    override fun findKeyExpireTime(key: String): String? {
+        val ttlInSeconds = redisTemplate.getExpire(key)
+        return TimeUtil().formatTTL(ttlInSeconds ?: -1)
+    }
 
 }
