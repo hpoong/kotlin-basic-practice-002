@@ -54,7 +54,7 @@ dependencies {
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 
 	// embedded redis
-	implementation("it.ozimov:embedded-redis:0.7.3")
+	implementation("it.ozimov:embedded-redis:0.7.2")
 
 }
 

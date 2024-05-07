@@ -1,5 +1,6 @@
 package com.hopoong.kotlin_practice.service
 
+import com.hopoong.kotlin_practice.domain.RedisRepositoryImpl
 import com.hopoong.kotlin_practice.domain.member.MemberDto
 import com.hopoong.kotlin_practice.domain.member.MemberRepository
 import com.hopoong.kotlin_practice.exception.BusinessException
@@ -19,7 +20,8 @@ import org.springframework.transaction.annotation.Transactional
 class AuthService(
     private val memberRepository: MemberRepository,
     private val passwordEncoder: PasswordEncoder,
-    private val jwtTokenProvider: JwtTokenProvider
+    private val jwtTokenProvider: JwtTokenProvider,
+//    private val redisRepositoryImpl: RedisRepositoryImpl,
 ) {
 
     private val log = LoggerFactory.getLogger(this::class.java)
@@ -53,6 +55,7 @@ class AuthService(
     fun createRefreshToken(token: String): HttpHeaders {
         var claims = jwtTokenProvider.validateAndReleaseToken(token)
         var cookie = jwtTokenProvider.generateRefreshTokenCookie(claims)
+        println(cookie.value)
         return CookieUtil().createCookieHeaders(cookie)
     }
 

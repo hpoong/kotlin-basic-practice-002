@@ -2,8 +2,11 @@ package com.hopoong.kotlin_practice.domain
 
 import org.slf4j.LoggerFactory
 import org.springframework.data.redis.core.RedisTemplate
+import org.springframework.stereotype.Component
+import org.springframework.stereotype.Repository
 import java.util.Optional
 
+//@Component
 class RedisRepositoryImpl(
     private val redisTemplate: RedisTemplate<String, Any>
 ): RedisRepository {
