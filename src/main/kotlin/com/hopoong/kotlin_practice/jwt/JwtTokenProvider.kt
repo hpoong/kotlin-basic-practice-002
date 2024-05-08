@@ -23,8 +23,10 @@ class JwtTokenProvider {
     private val AUTHUSER_KEY = "user"
 
     // 유효시간 = 1시간
-//    private val ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60
-    private val ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60
+    private val ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60
+
+    // 유효시간 = 1분
+//    private val ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60
 
     // 유효시간 = 7일
     private val REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7

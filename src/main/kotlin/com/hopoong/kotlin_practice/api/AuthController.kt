@@ -61,8 +61,8 @@ class AuthController(
      * logout
      */
     @GetMapping("/logout")
-    fun logout() : ResponseEntity<Any> {
+    fun logout(@CookieValue(value = "refresh-token", required = true) refreshToken: String) : ResponseEntity<Any> {
         return ResponseEntity.status(HttpStatus.OK)
-            .headers(authService.logout()).body("successfully")
+            .headers(authService.logout(refreshToken)).body("successfully")
     }
 }

@@ -8,6 +8,7 @@ import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
 import com.linecorp.kotlinjdsl.spring.data.listQuery
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
+import javax.persistence.criteria.JoinType
 
 @Repository
 interface PostRepository: JpaRepository<Post, Long>, PostCustomRepository { }
@@ -26,7 +27,7 @@ class PostCustomRepositoryImpl(
         return queryFactory.listQuery<Post> {
             select(entity(Post::class))
             from(entity(Post::class))
-            fetch(Post::member)
+            fetch(Post::member, joinType = JoinType.LEFT)
             orderBy(ExpressionOrderSpec(column(Member::id), false))
         }
     }

@@ -4,7 +4,9 @@ import com.hopoong.kotlin_practice.util.TimeUtil
 import org.slf4j.LoggerFactory
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 @Component
 class RedisRepositoryImpl(
@@ -12,7 +14,8 @@ class RedisRepositoryImpl(
 ): RedisRepository {
 
     private val log = LoggerFactory.getLogger(this::class.java)
-    private val REFRESH_TOKEN_EXPIRE_TIME: Long = 1000 * 60 * 60 * 24 * 7
+
+    private val REFRESH_TOKEN_EXPIRE_TIME: Long = 7 // 7일
 
     override fun clear() {
         redisTemplate.execute { connection ->
@@ -42,9 +45,9 @@ class RedisRepositoryImpl(
         return Optional.ofNullable(redisTemplate.opsForValue().get(key)).orElseThrow()
     }
 
+    @Transactional
     override fun save(key: String, value: Any) {
-//        println(TimeUtil().formatTTL(REFRESH_TOKEN_EXPIRE_TIME))
-        redisTemplate.opsForValue().set(key, value)
+        redisTemplate.opsForValue().set(key, value, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.DAYS)
     }
 
     override fun findKeyExpireTime(key: String): String? {

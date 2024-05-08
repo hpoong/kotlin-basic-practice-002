@@ -46,7 +46,15 @@ class AuthService(
      */
     fun reissueAccessToken(token: String): String? {
         var claims = jwtTokenProvider.validateAndReleaseToken(token)
-        return jwtTokenProvider.accessCreateToken(claims)
+        var claimsToken =  claims.get("user").toString()
+
+        var compareToken = redisRepositoryImpl.findByKey(claimsToken)
+
+        if(claimsToken.equals(compareToken)) {
+            return jwtTokenProvider.accessCreateToken(claims)
+        } else {
+            throw BusinessException(CommonCode.AUTH, "변조된 refresh token 토큰.")
+        }
     }
 
     /*
@@ -64,8 +72,12 @@ class AuthService(
     /*
      * logout
      */
-    fun logout(): HttpHeaders {
+    fun logout(refreshToken: String): HttpHeaders {
+        var claims = jwtTokenProvider.validateAndReleaseToken(refreshToken)
         var cookie = jwtTokenProvider.refreshTokenCookiExpired()
+
+        // refresh token redis 삭제
+        redisRepositoryImpl.remove(claims.get("user").toString())
         return CookieUtil().createCookieHeaders(cookie)
     }
 
