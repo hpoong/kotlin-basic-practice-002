@@ -6,6 +6,7 @@ import com.hopoong.kotlin_practice.service.PostService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 
 @RestController
 class PostController(
@@ -40,7 +41,10 @@ class PostController(
      * 게시글 추가
      */
     @PostMapping("/posts")
-    fun savePostInfo(@RequestBody saveDto: PostRequestDto.PostSaveDto) : ResponseEntity<Any> {
+    fun savePostInfo(
+//        @RequestPart(value = "saveParam", required = true) saveDto: PostRequestDto.PostSaveDto,
+//        @RequestPart(value = "fileList", required = false) fileList: MutableList<MultipartFile>,
+        @RequestBody saveDto: PostRequestDto.PostSaveDto) : ResponseEntity<Any> {
         return ResponseEntity.status(HttpStatus.OK).body(postService.savePostInfo(saveDto))
     }
 

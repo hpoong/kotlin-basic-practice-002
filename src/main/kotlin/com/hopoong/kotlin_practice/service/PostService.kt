@@ -7,6 +7,12 @@ import com.hopoong.kotlin_practice.domain.post.PostRepository
 import com.hopoong.kotlin_practice.domain.post.PostRequestDto
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.multipart.MultipartFile
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.StandardCopyOption
+import java.util.*
+import kotlin.NoSuchElementException
 
 @Service
 class PostService(
@@ -52,6 +58,23 @@ class PostService(
     fun savePostInfo(postSaveDto: PostRequestDto.PostSaveDto): PostDto {
         var memberEntity = memberRepository.findById(postSaveDto.memberId)
             .orElseThrow { NoSuchElementException("해당 ID에 해당하는 게시글이 없습니다: ${postSaveDto.memberId}") }
+
+//        if (fileList != null) {
+//            for (file in fileList) {
+//                val uuid = UUID.randomUUID()
+//                val originFileName = file.originalFilename
+//                val saveFileName = uuid.toString() + originFileName
+//                val filePath: Path = FileUtil.getPath()
+//                val location = filePath.resolve(Objects.requireNonNull(saveFileName))
+//                Files.copy(file.inputStream, location, StandardCopyOption.REPLACE_EXISTING)
+//                savedFileList.add(location)
+//
+//                // save 로직
+//
+//            }
+//        }
+
+
         return Post.of(postRepository.save(Post(postSaveDto.title, postSaveDto.content, memberEntity)))
     }
 
