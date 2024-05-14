@@ -5,19 +5,16 @@ import com.hopoong.kotlin_practice.domain.post.Post
 import com.hopoong.kotlin_practice.domain.post.PostDto
 import com.hopoong.kotlin_practice.domain.post.PostRepository
 import com.hopoong.kotlin_practice.domain.post.PostRequestDto
+import net.okihouse.autocomplete.repository.AutocompleteRepository
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.web.multipart.MultipartFile
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.StandardCopyOption
-import java.util.*
-import kotlin.NoSuchElementException
 
 @Service
 class PostService(
     private val postRepository: PostRepository,
     private val memberRepository: MemberRepository,
+    private val autocompleteRepository: AutocompleteRepository
 ) {
 
     /*
@@ -98,5 +95,22 @@ class PostService(
         }
 
         return Post.of(postRepository.save(postEntity))
+    }
+
+
+    /*
+     * 자동완성 게시글 제목 조회
+     */
+    @Cacheable(cacheNames = ["posts"])
+    @Transactional(readOnly = true)
+    fun autocompletePostTitle(word: String): List<String> {
+
+        // 게시글 조회
+        val postTitles = findPosts().map { it.title }
+        postTitles.forEach { autocompleteRepository.add(it) }
+
+        // redis 데이터 조회
+        val completions = autocompleteRepository.complete(word)
+        return completions.map { it.value }.sortedWith(compareByDescending { it })
     }
 }

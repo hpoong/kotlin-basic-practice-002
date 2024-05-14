@@ -30,6 +30,7 @@ dependencies {
 	implementation ("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-aop")
+	implementation("org.springframework.boot:spring-boot-starter-cache")
 	implementation ("org.springframework.boot:spring-boot-starter-security")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -37,7 +38,7 @@ dependencies {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}
 
-	// mariadb
+	// Mariadb
 	implementation("org.mariadb.jdbc:mariadb-java-client:3.3.2")
 
 	// JPA
@@ -54,7 +55,9 @@ dependencies {
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 
 	// Embedded Redis
-	implementation("it.ozimov:embedded-redis:0.7.2")
+	implementation("it.ozimov:embedded-redis:0.7.2") 				// Embedded Redis
+	implementation("com.github.okihouse:autocomplete:1.0.2") 		// autocomplete
+	implementation("com.github.ben-manes.caffeine:caffeine:3.1.8")  // Cache
 
 	// AWS
 	implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")

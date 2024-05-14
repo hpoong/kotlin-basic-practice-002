@@ -56,4 +56,13 @@ class PostController(
         return ResponseEntity.status(HttpStatus.OK).body(postService.modifyPostInfo(updateDto))
     }
 
+    /*
+     * 게시글 변경
+     */
+    @GetMapping("/posts/autocomplete/{word}")
+    fun autocompletePostTitle(@PathVariable word: String) : ResponseEntity<Any> {
+        return ResponseEntity.status(HttpStatus.OK).body(postService.autocompletePostTitle(word))
+    }
+
+
 }
