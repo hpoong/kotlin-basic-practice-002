@@ -1,1 +1,7 @@
-rootProject.name = "kotlin-spring-security"
+
+
+
+
+
+rootProject.name = "kotlin-project"
+include("spring-security")

@@ -9,13 +9,13 @@ class PostTypeConverter: AttributeConverter<PostTypeEnum, String>{
 
     // DB in
     override fun convertToDatabaseColumn(attribute: PostTypeEnum): String {
-        println("convertToDatabaseColumn ::: ${attribute.name}")
+//        println("convertToDatabaseColumn ::: ${attribute.name}")
         return attribute.name
     }
 
     // DB out
     override fun convertToEntityAttribute(dbData: String): PostTypeEnum {
-        println("convertToEntityAttribute ::: ${PostTypeEnum.of(dbData).info}")
+//        println("convertToEntityAttribute ::: ${PostTypeEnum.of(dbData).info}")
         return PostTypeEnum.of(dbData)
     }
 }
