@@ -6,18 +6,10 @@ import com.hopoong.kotlin_practice.domain.member.MemberDto
 open class PostDto(
     val title: String,
     val content: String,
-    val member: MemberDto
+    val member: MemberDto,
+    val postType: String
 ) {
-    fun toEntity(): Post {
-        return Post(
-            title = this.title,
-            content = this.content,
-            member = this.member.toEntity()
-        )
-    }
 }
-
-
 
 
 
@@ -35,5 +27,6 @@ class PostRequestDto {
         val memberId: Long,
         val title: String,
         val content: String,
+        val postType: PostTypeEnum,
     )
 }

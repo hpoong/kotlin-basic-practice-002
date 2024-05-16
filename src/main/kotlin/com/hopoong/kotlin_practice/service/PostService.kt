@@ -1,10 +1,7 @@
 package com.hopoong.kotlin_practice.service
 
 import com.hopoong.kotlin_practice.domain.member.MemberRepository
-import com.hopoong.kotlin_practice.domain.post.Post
-import com.hopoong.kotlin_practice.domain.post.PostDto
-import com.hopoong.kotlin_practice.domain.post.PostRepository
-import com.hopoong.kotlin_practice.domain.post.PostRequestDto
+import com.hopoong.kotlin_practice.domain.post.*
 import net.okihouse.autocomplete.repository.AutocompleteRepository
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
@@ -71,8 +68,7 @@ class PostService(
 //            }
 //        }
 
-
-        return Post.of(postRepository.save(Post(postSaveDto.title, postSaveDto.content, memberEntity)))
+        return Post.of(postRepository.save(Post(postSaveDto.title, postSaveDto.content, memberEntity, postSaveDto.postType)))
     }
 
     /*
